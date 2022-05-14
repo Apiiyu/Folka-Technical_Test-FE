@@ -6,8 +6,8 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        name: 'auth-login',
-        redirect: '/auth/login'
+        name: 'auth-register-1',
+        redirect: '/auth/register'
     },
     {
         path: '/auth',
@@ -22,8 +22,18 @@ const routes = [
                 path: 'login',
                 name: 'auth-login',
                 component: () => import('@/views/pages/authentication/Login.vue')
+            },
+            {
+                path: 'register',
+                name: 'auth-register',
+                component: () => import('@/views/pages/authentication/Register.vue')
             }
         ]
+    },
+    {
+        path: '/dashboard',
+        name: 'dashboard',
+        component: () => import('@/views/pages/dashboard/Dashboard.vue')
     }
 ]
 

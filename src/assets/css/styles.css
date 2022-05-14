@@ -11,6 +11,93 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Montserrat', 'Poppins', 'Avenir Next', sans-serif;
 }
 
+body, 
+html {
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Montserrat', 'Poppins', 'Avenir Next', sans-serif;
+    width: 100%;
+}
+
+a{
+    text-decoration: none;
+}
+
+input:active{
+    border: 1px solid var(--primary-color)
+}
+
+/* Components Class Start */
+
+.bg-primary-color{
+    background-color: var(--primary-color);
+}
+
+.txt-primary-color{
+    color: var(--primary-text-color);
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+/* Components Class End */
+
+
+/* Section Authentication Start */
+    #auth-register .container .card,
+    #auth-login .container .card{
+        box-shadow: 0px 1px 12px rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+    }
+
+    #auth-register .container .card .card-body .title,
+    #auth-login .container .card .card-body .title{
+        font-weight: 700;
+        font-size: 26px;
+        line-height: 25px;
+        letter-spacing: 0.04em;
+    }
+
+    #auth-register .container .card .card-body .input-group input,
+    #auth-login .container .card .card-body .input-group input{
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 7px;
+        height: 60px;
+        padding: 22px 20px ;
+    }
+
+    #auth-register .container .card .card-body .input-group input:active{
+        border: 1px solid var(--primary-color);
+    }
+
+    #auth-register .container .card .card-body button,
+    #auth-login .container .card .card-body button,
+    #auth-register .container .card .card-body .btn-next{
+        width: 100%;
+        height: 60px;
+        box-shadow: 0px 7px 6px rgba(0, 0, 0, 0.17);
+        border-radius: 7px;
+        border: none;
+        color: #fff;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 17px;
+        text-transform: uppercase;
+    }
+
+    #auth-register .container .card .card-body .btn-next{
+        padding-top: 20px;
+    }
+
+    #auth-register .container .card .card-body .btn-back:hover,
+    #auth-login .container .card .card-body .btn-next:hover{
+        cursor: pointer;
+    }
+/* Section Auth Login End */
+@media only screen and (max-width: 1200px) {
+}
