@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap');
+
+:root{
+    --primary-color: #EB3F36;
+    --primary-text-color: #730C07;
+    --secondary-text-color: #696969;
+    --third-text-color: #7C7C7C;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', 'Poppins', 'Avenir Next', sans-serif;
+}
+

@@ -1,0 +1,1 @@
+export var base_url = 'https://techtest.folkatech.com/api/';
