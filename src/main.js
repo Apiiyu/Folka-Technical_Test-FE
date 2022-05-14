@@ -14,7 +14,6 @@ import 'vuesax/dist/vuesax.css' //Vuesax styles
 
 // Script
 import 'bootstrap/dist/js/bootstrap.js'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 window.$ = window.jQuery = require('jquery')
 window.axios = require('axios')

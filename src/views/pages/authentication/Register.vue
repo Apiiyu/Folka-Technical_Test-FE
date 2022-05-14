@@ -127,7 +127,7 @@ export default {
         }
     },
     mounted(){
-
+        $('body').removeClass('bg-secondary')
     },
     methods: {
         actionButton(){

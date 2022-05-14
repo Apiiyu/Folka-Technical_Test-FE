@@ -55,6 +55,8 @@
 
 <script>
 import { createAlert } from '@/helpers/alert';
+import $ from 'jquery'
+window.$ = $
 
 export default {
     name: 'auth-login',
@@ -67,7 +69,7 @@ export default {
         }
     },
     mounted(){
-
+        $('body').removeClass('bg-secondary')
     },
     methods: {
         login(){
