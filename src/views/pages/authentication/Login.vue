@@ -85,7 +85,9 @@ export default {
                     this.$vs.loading.close()
                     createAlert('success', 'Login Success', 'Sukses login kedalam akun anda!')
 
-                    this.$router.push({ name: 'dashboard' })
+                    setTimeout(() => {
+                        this.$router.push({ name: 'dashboard' })
+                    }, 3000)
                 })
                 .catch(() => {
                     this.$vs.loading.close()

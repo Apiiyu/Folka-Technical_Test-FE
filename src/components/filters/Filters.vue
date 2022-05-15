@@ -1,6 +1,6 @@
 <template>
-    <section id="filters">
-        <div class="col-3">
+    <div class="col-3">
+        <section id="filters">
             <div class="row">
                 <div class="col-12">
                     <div class="accordion" id="accordionProcessing">
@@ -36,8 +36,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 </template>
 
 <script>

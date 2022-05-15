@@ -5,7 +5,7 @@
                 <div class="collapse navbar-collapse " id="navbarNavDropdown">
                     <ul class="navbar-nav ms-auto my-2">
                         <div class="input-group mx-2">
-                            <input type="text" class="form-control search" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control search" placeholder="Cari Produk" aria-label="Recipient's username" aria-describedby="basic-addon2">
                             <span class="input-group-text bg-primary-color" id="basic-addon2">
                                 <img src="@/assets/icons/search.svg" alt="icon">
                             </span>
@@ -25,9 +25,17 @@
                         </li>
                         
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="#">
-                                <img src="@/assets/icons/user.svg" alt="icon">
-                            </a>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary bg-light border-0 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="@/assets/icons/user.svg" alt="icon">
+                                </button>
+
+                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li class="dropdown-item" @click="logout()">
+                                        Keluar
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -48,3 +56,26 @@
         </div>
     </header>
 </template>
+
+<script>
+import { createAlert } from '@/helpers/alert'
+
+export default {
+    name: 'HeaderComponent',
+    methods: {
+        logout() {
+            this.$store.dispatch('logout')
+                .then(() => {
+                    createAlert('success', 'Sukses', 'Berhasil keluar dari akun!')
+                    setTimeout(() => {
+                        this.$router.push({ name: 'auth-login' })
+                    }, 1000)
+                })
+                .catch((error) => {
+                    console.log(error)
+                    createAlert('error', 'Gagal', 'Gagal keluar dari akun!')
+                })
+        }
+    }
+}
+</script>
