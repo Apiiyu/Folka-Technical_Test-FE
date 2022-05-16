@@ -202,11 +202,11 @@
 
 <script>
 import { createAlert } from '@/helpers/alert'
-import OriginAccordion from '@/components/filters/accordion/OriginAccordion'
-import SpeciesAccordion from '@/components/filters/accordion/SpeciesAccordion'
-import RoastLevelAccordion from '@/components/filters/accordion/RoastLevelAccordion'
-import TastedAccordion from '@/components/filters/accordion/TastedAccordion'
-import ProcessingAccordion from '@/components/filters/accordion/ProcessingAccordion'
+import OriginAccordion from '@/views/pages/dashboard/accordion/OriginAccordion'
+import SpeciesAccordion from '@/views/pages/dashboard/accordion/SpeciesAccordion'
+import RoastLevelAccordion from '@/views/pages/dashboard/accordion/RoastLevelAccordion'
+import TastedAccordion from '@/views/pages/dashboard/accordion/TastedAccordion'
+import ProcessingAccordion from '@/views/pages/dashboard/accordion/ProcessingAccordion'
 import $ from 'jquery'
 import { getDataProduct, getDataProductByKeyword, getDataProductByKeywordAndPrice, getDataProductByPrice, getDataProductByOrders } from '@/services/product/product.service'
 
