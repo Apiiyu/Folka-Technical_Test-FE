@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { createAlert } from '@/helpers/alert';
+import { createAlert } from '@/helpers/alert'
 import $ from 'jquery'
 window.$ = $
 
@@ -87,7 +87,7 @@ export default {
 
                     setTimeout(() => {
                         this.$router.push({ name: 'dashboard' })
-                    }, 3000)
+                    }, 1000)
                 })
                 .catch(() => {
                     this.$vs.loading.close()

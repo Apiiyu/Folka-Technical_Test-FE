@@ -49,3 +49,15 @@ export async function getDataProductByPrice(minimumPrice, maximumPrice, page, li
             return error
         })
 }
+
+export async function getDataProductByOrders(orders, page, limit){
+    return axios.get(base_url+ApiRoute.product+`?keyword=&page=${page}&limit=${limit}&order=${orders},ASC`)
+        .then((response) => {
+            const data = response.data
+
+            return data
+        })
+        .catch((error) => {
+            return error
+        })
+}

@@ -1,6 +1,64 @@
 <template>
     <section id="dashboard">
-        <HeaderComponent />
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container ">
+                    <div class="collapse navbar-collapse " id="navbarNavDropdown">
+                        <ul class="navbar-nav ms-auto my-2">
+                            <div class="input-group mx-2">
+                                <form action="" method="post" @submit.prevent="searchData()" class="d-flex">
+                                    <input type="search" v-model="keyword" placeholder="Cari Produk" class="form-control search">
+                                    <button type="submit" class="input-group-text bg-primary-color">
+                                            <img src="@/assets/icons/search.svg" alt="icon">
+                                    </button>
+                                </form> 
+                            </div>
+
+                            <li class="nav-item mx-2">
+                                <a class="nav-link active" aria-current="page" href="#">
+                                    <img src="@/assets/icons/love.svg" alt="icon">
+                                </a>
+                            </li>
+                            
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" href="#">
+                                    <img src="@/assets/icons/bag.svg" alt="icon">
+
+                                </a>
+                            </li>
+                            
+                            <li class="nav-item mx-2">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary bg-light border-0 dropdown-toggle d-flex" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="@/assets/icons/user.svg" alt="icon">
+                                        <img src="@/assets/icons/arrow-dropdown-down.svg" alt="icon" style="margin: 0.5rem;">
+                                    </button>
+
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li class="dropdown-item " @click="logout()">
+                                            Keluar
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="categories">
+                            <div class="d-flex justify-content-center align-items-center bg-primary-color" style="height: 64px">
+                                <h4 class="title text-white text-uppercase me-2">Belanja</h4>
+                                <img src="@/assets/icons/arrow-down.svg" alt="icon">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
 
         <section id="main-content" class="bg-light">
             <div class="container">
@@ -84,12 +142,24 @@
                             <section id="header-filter">
                                 <div class="d-flex justify-content-between">
                                     <div class="d-flex">
-                                        Menampilkan 
-                                        <b-form-select v-model="perPage" class="mx-2" size="sm" :options="pageOptions" @change="getData()"></b-form-select>&nbsp;dari 132 data
+                                        Menampilkan
+                                        <select id="product_types" class="mx-2" v-model="perPage" @change="getData()">
+                                            <option value="" selected="true">12</option>
+                                            <option value="">24</option>
+                                            <option value="">36</option>
+                                            <option value="">48</option>
+                                            <option value="">64</option>
+                                        </select> 
+                                        &nbsp;dari 132 data
                                     </div>
 
                                     <div class="d-flex">
-                                        Urutkan <b-form-select v-model="filterProduct" class="mx-2" size="sm" :options="pageOptionsFilter" @change="getData()"></b-form-select>
+                                        Urutkan Berdasarkan
+                                        <select id="product_types" class="mx-2" v-model="filterProduct" @change="getData()">
+                                            <option value="product_name" selected="true">Nama Produk</option>
+                                            <option value="product_type">Tipe Produk</option>
+                                            <option value="price">Harga</option>
+                                        </select> 
                                     </div>
                                 </div>
                             </section>
@@ -97,7 +167,7 @@
                             <section id="product" class="mt-5">
                                 <div class="row">
                                     <div class="col-4 mb-3" v-for="(item, index) in products" :key="index">
-                                        <router-link :to="{ name: 'product', params: { slug: item.slug, product_name: item.short_description} }">
+                                        <router-link :to="{ name: 'product', params: { slug: item.slug, product_name: item.name }}">
                                             <div class="card">
                                                 <img :src="item.images[0].image_url" alt="product" class="card-img-top">
                                                 <div class="card-body">
@@ -112,7 +182,7 @@
                                                                 <img src="@/assets/icons/star.svg" alt="" class="me-1">
                                                                 <img src="@/assets/icons/star.svg" alt="" class="me-1">
                                                             </div>
-                                                            <p class="text-muted pt-2">(7)</p>
+                                                            <p class="text-muted pt-2">({{ item.id }})</p>
                                                         </div>
                                                         <h6 class="price mt-3">Rp. {{ formatRupiah(item.price, '') }}</h6>
                                                     </div>
@@ -131,21 +201,20 @@
 </template>
 
 <script>
-import HeaderComponent from '@/components/header/HeaderComponent'
+import { createAlert } from '@/helpers/alert'
 import OriginAccordion from '@/components/filters/accordion/OriginAccordion'
 import SpeciesAccordion from '@/components/filters/accordion/SpeciesAccordion'
 import RoastLevelAccordion from '@/components/filters/accordion/RoastLevelAccordion'
 import TastedAccordion from '@/components/filters/accordion/TastedAccordion'
 import ProcessingAccordion from '@/components/filters/accordion/ProcessingAccordion'
 import $ from 'jquery'
-import { getDataProduct, getDataProductByKeyword, getDataProductByKeywordAndPrice, getDataProductByPrice } from '@/services/product/product.service'
+import { getDataProduct, getDataProductByKeyword, getDataProductByKeywordAndPrice, getDataProductByPrice, getDataProductByOrders } from '@/services/product/product.service'
 
 window.$ = $
 
 export default {
     name: 'dashboard',
     components: {
-        HeaderComponent,
         OriginAccordion,
         SpeciesAccordion,
         RoastLevelAccordion,
@@ -175,6 +244,7 @@ export default {
     mounted(){
         $('body').addClass('bg-secondary')
         this.getData()
+        console.log(localStorage.getItem('token'), 'token')
     },
     methods: {
         getData(){
@@ -188,6 +258,12 @@ export default {
                 keyword: this.keyword,
                 minimumPrice: this.minimumPrice,
                 maximumPrice: this.maximumPrice,
+                orders: this.filterProduct
+            }
+
+            console.log('params order', params.orders)
+            if(params.order){
+                alert('masuk')
             }
             
             if(params.keyword && params.minimumPrice && params.maximumPrice){
@@ -217,8 +293,51 @@ export default {
                     .catch((error) => {
                         console.log('error', error)
                     })
+            } else if(params.orders){
+                console.log(params.orders, 'masuk order')
+                getDataProductByOrders(params.orders, params.page, params.perPage)
+                    .then((result) => {
+                        this.$vs.loading.close();
+                        this.products = (result.data.list).sort((a, b) => { return b.updatedAt - a.updatedAt })
+                    })
+                    .catch((error) => {
+                        console.log('error', error)
+                    })
             } else {
                 getDataProduct(params.page, params.perPage)
+                    .then((result) => {
+                        this.$vs.loading.close();
+                        this.products = (result.data.list).sort((a, b) => { return b.updatedAt - a.updatedAt })
+                    })
+                    .catch((error) => {
+                        console.log('error', error)
+                    })
+            }
+        },
+        searchData(){
+            this.$vs.loading({
+                type: 'sound'
+            });
+            
+            let params = {
+                page: this.page,
+                perPage: this.perPage,
+                keyword: this.keyword,
+                minimumPrice: this.minimumPrice,
+                maximumPrice: this.maximumPrice,
+            }
+
+            if(params.keyword && params.minimumPrice && params.maximumPrice){
+                getDataProductByKeywordAndPrice(params.keyword, params.minimumPrice, params.maximumPrice, params.page, params.perPage)
+                    .then((result) => {
+                        this.$vs.loading.close();
+                        this.products = (result.data.list).sort((a, b) => { return b.updatedAt - a.updatedAt })
+                    })
+                    .catch((error) => {
+                        console.log('error', error)
+                    })
+            } else {
+                getDataProductByKeyword(params.keyword, params.page, params.perPage)
                     .then((result) => {
                         this.$vs.loading.close();
                         this.products = (result.data.list).sort((a, b) => { return b.updatedAt - a.updatedAt })
@@ -244,6 +363,19 @@ export default {
 
             rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
             return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
+        },
+        logout() {
+            this.$store.dispatch('logout')
+                .then(() => {
+                    createAlert('success', 'Sukses', 'Berhasil keluar dari akun!')
+                    setTimeout(() => {
+                        this.$router.push({ name: 'auth-login' })
+                    }, 1000)
+                })
+                .catch((error) => {
+                    console.log(error)
+                    createAlert('error', 'Gagal', 'Gagal keluar dari akun!')
+                })
         }
     }
 }

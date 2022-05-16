@@ -38,7 +38,7 @@
                                     <div class="col-12">
                                         <Carousel :loop="true" :margin="20" :items="3">
                                             <CarouselItem v-for="(item, index) in products[0].images" :key="index" :src="item.image_url" :alt="item.image_url">
-                                                <img :src="item.image_url" alt="images">
+                                                <img :src="item.image_url" alt="images" class="img-carousel">
                                             </CarouselItem>
                                         </Carousel>
                                     </div>
@@ -82,7 +82,8 @@
                                         <b class="m-auto">-</b>
                                     </div>
                                     <div class="box-value d-flex justify-content-center align-content-center">
-                                        <b class="m-auto">{{ valueQty }}</b>
+                                        <b class="m-auto" v-if="valueQty > 0">{{ valueQty }}</b>
+                                        <b class="m-auto" v-else>{{ valueQty++ }}</b>
                                     </div>
                                     <div class="box-counter-plus d-flex justify-content-center align-content-center" @click="valueQty++">
                                         <b class="m-auto">+</b>
@@ -146,26 +147,28 @@
 
                                     <div class="row">
                                         <div class="col-4" v-for="(item, index) in products_recommendation" :key="index">
-                                            <div class="card" v-if="index <= 2">
-                                                <img :src="item.images[0].image_url" alt="product" class="card-img-top">
-                                                <div class="card-body">
-                                                    <div class="text-center">
-                                                        <h5 class="title text-uppercase">{{ item.name }}</h5>
-                                                        <p class="name-production text-uppercase">Ubrukopi</p>
-                                                        <div class="ratings mt-2 d-flex justify-content-center align-items-center">
-                                                            <div class="stars">
-                                                                <img src="@/assets/icons/star.svg" alt="" class="me-1">
-                                                                <img src="@/assets/icons/star.svg" alt="" class="me-1">
-                                                                <img src="@/assets/icons/star.svg" alt="" class="me-1">
-                                                                <img src="@/assets/icons/star.svg" alt="" class="me-1">
-                                                                <img src="@/assets/icons/star.svg" alt="" class="me-1">
+                                            <router-link :to="{ name: 'product', params: { slug: item.slug, product_name: item.name} }">
+                                                <div class="card" v-if="index <= 2">
+                                                    <img :src="item.images[0].image_url" alt="product" class="card-img-top">
+                                                    <div class="card-body">
+                                                        <div class="text-center">
+                                                            <h5 class="title text-uppercase">{{ item.name }}</h5>
+                                                            <p class="name-production text-uppercase">Ubrukopi</p>
+                                                            <div class="ratings mt-2 d-flex justify-content-center align-items-center">
+                                                                <div class="stars">
+                                                                    <img src="@/assets/icons/star.svg" alt="" class="me-1">
+                                                                    <img src="@/assets/icons/star.svg" alt="" class="me-1">
+                                                                    <img src="@/assets/icons/star.svg" alt="" class="me-1">
+                                                                    <img src="@/assets/icons/star.svg" alt="" class="me-1">
+                                                                    <img src="@/assets/icons/star.svg" alt="" class="me-1">
+                                                                </div>
+                                                                <p class="text-muted pt-2">(7)</p>
                                                             </div>
-                                                            <p class="text-muted pt-2">(7)</p>
+                                                            <h6 class="price mt-4">Rp. {{ formatRupiah(item.price, '') }}</h6>
                                                         </div>
-                                                        <h6 class="price mt-4">Rp. {{ formatRupiah(item.price, '') }}</h6>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </router-link>
                                         </div>
                                     </div>
                                 </div>
@@ -205,6 +208,7 @@ export default {
     mounted(){
         $('body').addClass('bg-secondary')
         this.getData()
+        console.log('params', this.$route.params.product_name)
     },
     methods: {
         getData(){
@@ -214,6 +218,8 @@ export default {
 
             // --> Get data route params
             this.keyword = this.$route.params.product_name
+            // let removeSpace = routeParams.replace(/%20/g, " ",)
+            
 
             let params = {
                 page: this.page,
